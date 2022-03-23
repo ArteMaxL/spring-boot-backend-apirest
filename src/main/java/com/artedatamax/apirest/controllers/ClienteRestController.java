@@ -35,4 +35,23 @@ public class ClienteRestController {
 		//cliente.setCreatedAt(new Date());
 		return clienteService.save(cliente);
 	}
+
+	@PutMapping("/clientes/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Cliente update(@RequestBody Cliente cliente,
+						  @PathVariable Long id){
+		Cliente clienteActual = clienteService.findById(id);
+
+		clienteActual.setNombre(cliente.getNombre());
+		clienteActual.setApellido(cliente.getApellido());
+		clienteActual.setEmail(cliente.getEmail());
+
+		return clienteService.save(clienteActual);
+	}
+
+	@DeleteMapping("clientes/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable Long id){
+		clienteService.delete(id);
+	}
 }
